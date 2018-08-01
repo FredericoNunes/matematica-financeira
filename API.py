@@ -53,13 +53,35 @@ def desconto():
     for itens in valores:
         if not all(k in itens for k in teste_requisitos):
             resposta.append({"Desconto":
-                                 'Erro: Valores Faltando ou Incorreto'})
+                                 'Erro: Valores Faltando ou Incorreto'
+                             })
         else:
             resposta.append({"Desconto":
                                  fn().Desconto(itens['valorNominal'],itens['taxa'],itens['tempo']/itens['base'])
                              })
 
     return jsonify(resposta), 200
+
+@app.route('/Matematica/Financeira/ValorParcela', methods=['POST'])
+def vpParcela():
+    valores = request.get_json()
+    teste_requisitos = ['principal','taxa','tempo']
+
+    resposta = []
+    for itens in valores:
+        if not all(k in itens for k in teste_requisitos):
+            resposta.append({"vpParcela":
+                                 'Erro: Valores Faltando ou Incorreto'
+                             })
+        else:
+            fator_vp = fn().FatorVP(itens['taxa'],itens['tempo'])
+            parcela  = itens['principal']/fator_vp
+            resposta.append({'parcela':parcela})
+
+    return jsonify(resposta), 200
+
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

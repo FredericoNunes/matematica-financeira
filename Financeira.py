@@ -22,6 +22,12 @@ class Financeira(object):
         self.fator = Financeira.truncate((1+taxa/capitalizacao)**(capitalizacao*tempo),trunc)
         return self.fator
 
+    def FatorVP(self,taxa,tempo,capitalizacao=1,trunc=8):
+        fator = self.Fator(taxa,tempo,capitalizacao,trunc)
+        fator_VP = (fator-1)/(fator*taxa)
+        print(fator_VP)
+        return fator_VP
+
     def ValorPresente(self,valorFuturo,taxa,tempo,capitalizacao=1,trunc=8):
         """
         :param valorFuturo: <float>
@@ -48,19 +54,7 @@ class Financeira(object):
         valor_futuro = Financeira.truncate(valorPresente*fator,trunc)
         return valor_futuro
 
-    def TaxaEfetiva(self,taxa,tempo,capitalizacao=1,trunc=8):
-        """
-        :param taxa: <float>
-        :param tempo: <int>
-        :param capitalizacao:<int>
-        :param trunc:<int>
-        :return:
-        """
-        fator = self.Fator(taxa,tempo,capitalizacao,trunc)
-        taxa_efetiva = Financeira.truncate(fator-1,trunc)
-        return taxa_efetiva
-
-    def Desconto(self,valorNominal,taxa,tempo):
+    def Desconto(self,valorNominal,taxa,tempo,trunc=8):
         """
         :param valorNominal:
         :param taxa:
@@ -68,7 +62,7 @@ class Financeira(object):
         :return:
         """
         fator = self.Fator(taxa,tempo)
-        desconto_finaceiro = valorNominal*Financeira.truncate((fator-1)/fator,8)
+        desconto_finaceiro = valorNominal*Financeira.truncate((fator-1)/fator,trunc)
         return desconto_finaceiro
 
     @staticmethod
