@@ -4,5 +4,5 @@
   <li>Valor Presente</li>
   <li>Valor Futuro</li>
   <li>Desconto</li>
-  <li>Taxa Efetiva</li>
+  <li>Parcela de Serie Uniforme</li>
 </ul>
